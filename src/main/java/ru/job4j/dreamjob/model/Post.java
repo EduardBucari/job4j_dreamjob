@@ -6,14 +6,14 @@ import java.util.Objects;
 public class Post {
     private  int id;
 
+    private String name;
+    private String description;
+    private Date created;
+
     public Post(int id, String name) {
         this.id = id;
         this.name = name;
     }
-
-    private String name;
-    private String description;
-    private Date created;
 
     public Post(int id, String name, String description, Date created) {
         this.id = id;

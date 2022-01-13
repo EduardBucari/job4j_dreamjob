@@ -11,7 +11,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <title>Работа мечты</title>
-
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -36,17 +35,27 @@
         <table class="table">
           <thead>
           <tr>
-            <th scope="col">Названия</th>
+            <th scope="col">Имя</th>
+            <th scope="col">Фото</th>
           </tr>
           </thead>
           <tbody>
           <c:forEach items="${candidates}" var="candidate">
             <tr>
               <td>
-                <a href='<c:url value="/post/edit.jsp?id=${candidate.id}"/>'>
+                <a href='<c:url value="/candidate/edit.jsp?id=${candidate.id}"/>'>
                   <i class="fa fa-edit mr-3"></i>
                 </a>
                 <c:out value="${candidate.name}"/>
+              </td>
+              <td>
+                <img src="<c:url value='/download?name=${candidate.id}.jpeg'/>" width="100px" height="100px"/>
+                <a href='<c:url value="/upload.jsp?id=${candidate.id}"/>'>
+                  <img src="https://img.icons8.com/ios/50/000000/add--v2.png" width="25px" height="25px"/>
+                </a>
+                <a href='<c:url value="/del.jsp?id=${candidate.id}"/>'>
+                  <img src="https://img.icons8.com/material-rounded/24/000000/filled-trash.png"/>
+                </a>
               </td>
             </tr>
           </c:forEach>

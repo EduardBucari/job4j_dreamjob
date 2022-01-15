@@ -17,7 +17,7 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-class DbStore implements Store {
+public class DbStore implements Store {
 
     private final BasicDataSource pool = new BasicDataSource();
     private static final Logger LOG = Logger.getLogger("name");

@@ -1,5 +1,7 @@
 package ru.job4j.dreamjob.model.servlet;
 
+import ru.job4j.dreamjob.model.Path;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +15,7 @@ public class DownloadServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("name");
         File downloadFile = null;
-        for (File file : new File("c:\\images\\").listFiles()) {
+        for (File file : new File(Path.candidatePic()).listFiles()) {
             if (name.equals(file.getName())) {
                 downloadFile = file;
                 break;

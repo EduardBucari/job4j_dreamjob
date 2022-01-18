@@ -1,35 +1,32 @@
 package ru.job4j.dreamjob.model.store;
 
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.job4j.dreamjob.model.Candidate;
 import ru.job4j.dreamjob.model.Post;
+import ru.job4j.dreamjob.model.User;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.*;
+
 
 public class DbStore implements Store {
 
     private final BasicDataSource pool = new BasicDataSource();
-    private static final Logger LOG = Logger.getLogger("name");
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(DbStore.class);
 
     private DbStore() {
         Properties cfg = new Properties();
         try (BufferedReader io = new BufferedReader(
                 new InputStreamReader(
                         DbStore.class.getClassLoader()
-                                .getResourceAsStream("db.properties")
-                )
-        )) {
+                                .getResourceAsStream("db.properties")))) {
             cfg.load(io);
         } catch (Exception e) {
             throw new IllegalStateException(e);
@@ -56,10 +53,11 @@ public class DbStore implements Store {
         return Lazy.INST;
     }
 
+    @Override
     public Collection<Post> findAllPosts() {
         List<Post> posts = new ArrayList<>();
         try (Connection cn = pool.getConnection();
-        PreparedStatement ps = cn.prepareStatement("SELECT * FROM post")
+             PreparedStatement ps = cn.prepareStatement("SELECT * FROM post")
         ) {
             try (ResultSet it = ps.executeQuery()) {
                 while (it.next()) {
@@ -67,35 +65,28 @@ public class DbStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.log(Level.INFO, e.getMessage());
+            LOGGER.error("Ошибка при получении списка вакансий", e);
         }
         return posts;
     }
 
+    @Override
     public Collection<Candidate> findAllCandidates() {
-        List<Candidate> candidates = new ArrayList<>();
+        List<Candidate> cnd = new ArrayList<>();
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps = cn.prepareStatement("SELECT * FROM candidates")
-        ) {
+             PreparedStatement ps = cn.prepareStatement("SELECT * FROM candidate")) {
             try (ResultSet it = ps.executeQuery()) {
                 while (it.next()) {
-                    candidates.add(new Candidate(it.getInt("id"), it.getString("name")));
+                    cnd.add(new Candidate(it.getInt("id"), it.getString("name")));
                 }
             }
         } catch (Exception e) {
-            LOG.log(Level.INFO, e.getMessage());
+            LOGGER.error("Ошибка при получении списка кандидатов", e);
         }
-        return candidates;
+        return cnd;
     }
 
-    public void save(Candidate candidate) {
-        if (candidate.getId() == 0) {
-            create(candidate);
-        } else {
-            update(candidate);
-        }
-    }
-
+    @Override
     public void save(Post post) {
         if (post.getId() == 0) {
             create(post);
@@ -104,31 +95,19 @@ public class DbStore implements Store {
         }
     }
 
-
-
-    private Candidate create(Candidate candidate) {
-        try (Connection cn = pool.getConnection();
-        PreparedStatement ps = cn.prepareStatement("INSERT INFO candidates(name) VALUES (?)",
-                PreparedStatement.RETURN_GENERATED_KEYS)
-        ) {
-            ps.setString(1, candidate.getName());
-            ps.execute();
-            try (ResultSet id = ps.getGeneratedKeys()) {
-                if (id.next()) {
-                    candidate.setId(id.getInt(1));
-                }
-            }
-        } catch (Exception e) {
-            LOG.log(Level.INFO, e.getMessage());
+    @Override
+    public void saveCnd(Candidate cnd) {
+        if (cnd.getId() == 0) {
+            createCnd(cnd);
+        } else {
+            updateCnd(cnd);
         }
-        return candidate;
     }
 
     private Post create(Post post) {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps = cn.prepareStatement("INSERT INTO post(name) VALUES (?)",
-                PreparedStatement.RETURN_GENERATED_KEYS)
-        ) {
+                     PreparedStatement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, post.getName());
             ps.execute();
             try (ResultSet id = ps.getGeneratedKeys()) {
@@ -137,39 +116,54 @@ public class DbStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.log(Level.INFO, e.getMessage());
+            LOGGER.error("Не удалось добавить вакансию", e);
         }
         return post;
     }
 
+    private Candidate createCnd(Candidate cnd) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps = cn.prepareStatement("INSERT INTO candidate(name) VALUES (?)",
+                     PreparedStatement.RETURN_GENERATED_KEYS)) {
+            ps.setString(1, cnd.getName());
+            ps.execute();
+            try (ResultSet id = ps.getGeneratedKeys()) {
+                if (id.next()) {
+                    cnd.setId(id.getInt(1));
+                }
+            }
+        } catch (Exception e) {
+            LOGGER.error("Не удалось добавить кандидата", e);
+        }
+        return cnd;
+    }
+
     private void update(Post post) {
         try (Connection cn = pool.getConnection();
-        PreparedStatement ps = cn.prepareStatement("update post set name=(?) where id=(?)")
-        ) {
+             PreparedStatement ps = cn.prepareStatement("UPDATE post set name = ? where id = ?")) {
             ps.setString(1, post.getName());
             ps.setInt(2, post.getId());
-            ps.executeUpdate();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            ps.execute();
+        } catch (Exception e) {
+            LOGGER.error("Не удалось изменить вакансию", e);
         }
     }
 
-    private void update(Candidate candidate) {
+    private void updateCnd(Candidate cnd) {
         try (Connection cn = pool.getConnection();
-        PreparedStatement ps = cn.prepareStatement("update candidates set name=(?) where id=(?)")
-        ) {
-            ps.setString(1, candidate.getName());
-            ps.setInt(2, candidate.getId());
-            ps.executeUpdate();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+             PreparedStatement ps = cn.prepareStatement("UPDATE candidate set name = ? where id = ?")) {
+            ps.setString(1, cnd.getName());
+            ps.setInt(2, cnd.getId());
+            ps.execute();
+        } catch (Exception e) {
+            LOGGER.error("Не удалось изменить кандидата", e);
         }
     }
 
+    @Override
     public Post findById(int id) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps = cn.prepareStatement("SELECT * FROM post WHERE id = ?")
-        ) {
+             PreparedStatement ps = cn.prepareStatement("SELECT * FROM post WHERE id = ?")) {
             ps.setInt(1, id);
             try (ResultSet it = ps.executeQuery()) {
                 if (it.next()) {
@@ -177,15 +171,15 @@ public class DbStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.log(Level.INFO, e.getMessage());
+            LOGGER.error("Отсутвует вакансия с указанным id", e);
         }
         return null;
     }
 
-    public Candidate findByIdCandidate(int id) {
+    @Override
+    public Candidate findByIdCnd(int id) {
         try (Connection cn = pool.getConnection();
-        PreparedStatement ps = cn.prepareStatement("SELECT * FROM candidates WHERE id = ?")
-        ) {
+             PreparedStatement ps = cn.prepareStatement("SELECT * FROM candidate WHERE id = ?")) {
             ps.setInt(1, id);
             try (ResultSet it = ps.executeQuery()) {
                 if (it.next()) {
@@ -193,7 +187,68 @@ public class DbStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.log(Level.INFO, e.getMessage());
+            LOGGER.error("Отсутвует кандидат с указанным id", e);
+        }
+        return null;
+    }
+
+    @Override
+    public Candidate deleteCnd(int id) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps = cn.prepareStatement("DELETE from candidate WHERE id = ?")) {
+            ps.setInt(1, id);
+            try (ResultSet it = ps.executeQuery()) {
+                if (it.next()) {
+                    return new Candidate(it.getInt("id"), it.getString("name"));
+                }
+            }
+        } catch (Exception e) {
+            LOGGER.error("Ошибка при удалении кандидата", e);
+        }
+        return null;
+    }
+
+    @Override
+    public void saveUser(User user) {
+        if (user.getEmail() != null) {
+            createUser(user);
+        }
+    }
+
+
+
+    private User createUser(User user) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps = cn.prepareStatement("INSERT INTO users(name, email, password) VALUES (?, ?)",
+                     PreparedStatement.RETURN_GENERATED_KEYS)) {
+            ps.setString(1, user.getName());
+            ps.setString(2, user.getEmail());
+            ps.setString(3, user.getPassword());
+            ps.execute();
+            try (ResultSet id = ps.getGeneratedKeys()) {
+                if (id.next()) {
+                    user.setId(id.getInt(1));
+                }
+            }
+        } catch (Exception e) {
+            LOGGER.error("Не удалось добавить пользователя", e);
+        }
+        return user;
+    }
+
+    @Override
+    public User findByEmailUser(String email) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps = cn.prepareStatement("SELECT * FROM users WHERE email = ?")) {
+            ps.setString(1, email);
+            try (ResultSet it = ps.executeQuery()) {
+                if (it.next()) {
+                    return new User(it.getString("name"),
+                            it.getString("email"), it.getString("password"));
+                }
+            }
+        } catch (Exception e) {
+            LOGGER.error("Отсутвует пользователь с указанным email", e);
         }
         return null;
     }

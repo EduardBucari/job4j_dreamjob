@@ -14,7 +14,7 @@ public class CandidateServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
       req.setCharacterEncoding("UTF-8");
-        DbStore.instOf().save(
+        DbStore.instOf().saveCnd(
                 new Candidate(
                         Integer.parseInt(req.getParameter("id")),
                         req.getParameter("name")

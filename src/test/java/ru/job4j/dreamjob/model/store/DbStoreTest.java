@@ -15,7 +15,6 @@ import static org.hamcrest.Matchers.is;
 
 public class DbStoreTest {
 
-    @Ignore
     @Test
     public void whenCreatePost() {
         Store store = DbStore.instOf();
@@ -25,7 +24,6 @@ public class DbStoreTest {
         assertThat(postInDb.getName(), is(post.getName()));
     }
 
-    @Ignore
     @Test
     public void whenUpdatePost() {
         Store store = DbStore.instOf();
@@ -37,7 +35,6 @@ public class DbStoreTest {
         assertThat(postInDb.getName(), is(post1.getName()));
     }
 
-    @Ignore
     @Test
     public void whenFindAllPost() {
         Store store = DbStore.instOf();
@@ -49,40 +46,4 @@ public class DbStoreTest {
 
         assertThat(posts.iterator().next().getName(), is(post1.getName()));
     }
-
-    @Ignore
-    @Test
-    public void whenCreateCandidate() {
-        Store store = DbStore.instOf();
-        Candidate candidate = new Candidate(0, "Java JobMan");
-        store.save(candidate);
-        Candidate cndInDb = store.findByIdCandidate(candidate.getId());
-        assertThat(cndInDb.getName(), is(candidate.getName()));
-    }
-
-    @Ignore
-    @Test
-    public void whenUpdateCandidate() {
-        Store store = DbStore.instOf();
-        Candidate cnd = new Candidate(1, "Java JobMan");
-        Candidate cnd1 = new Candidate(1, "Java MidlMan");
-        store.save(cnd);
-        store.save(cnd1);
-        Candidate cndInDb = store.findByIdCandidate(1);
-        assertThat(cndInDb.getName(), is(cnd1.getName()));
-    }
-
-    @Ignore
-    @Test
-    public void whenFindAllCandidate() {
-        Store store = DbStore.instOf();
-        Candidate cnd = new Candidate(0, "Java JobManMan");
-        Candidate cnd1 = new Candidate(1, "Java MidlMan");
-        store.save(cnd);
-        store.save(cnd1);
-        List<Candidate> list = new ArrayList<>(store.findAllCandidates());
-        assertThat(list.iterator().next().getName(), is(cnd1.getName()));
-    }
-
-
 }

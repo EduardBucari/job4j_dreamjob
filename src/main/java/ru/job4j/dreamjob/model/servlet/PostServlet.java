@@ -2,6 +2,7 @@ package ru.job4j.dreamjob.model.servlet;
 
 import ru.job4j.dreamjob.model.Post;
 import ru.job4j.dreamjob.model.store.DbStore;
+import ru.job4j.dreamjob.model.store.MemStore;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -26,6 +27,7 @@ public class PostServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("posts", DbStore.instOf().findAllPosts());
+        req.setAttribute("user", req.getSession().getAttribute("user"));
         req.getRequestDispatcher("posts.jsp").forward(req, resp);
     }
 }

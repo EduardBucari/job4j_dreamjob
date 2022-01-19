@@ -1,7 +1,5 @@
 package ru.job4j.dreamjob.model.store;
 
-
-import org.junit.Ignore;
 import org.junit.Test;
 import ru.job4j.dreamjob.model.Candidate;
 import ru.job4j.dreamjob.model.Post;

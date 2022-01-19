@@ -40,6 +40,10 @@
     <servlet-name>LogoutServlet</servlet-name>
     <servlet-class>ru.job4j.dreamjob.model.servlet.LogoutServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>RegServlet</servlet-name>
+    <servlet-class>ru.job4j.dreamjob.model.servlet.RegServlet</servlet-class>
+  </servlet>
 
 
   <filter>
@@ -80,6 +84,10 @@
   <servlet-mapping>
     <servlet-name>LogoutServlet</servlet-name>
     <url-pattern>/logout.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>RegServlet</servlet-name>
+    <url-pattern>/reg.do</url-pattern>
   </servlet-mapping>
 
 

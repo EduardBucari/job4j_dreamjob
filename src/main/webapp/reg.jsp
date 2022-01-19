@@ -1,4 +1,4 @@
-<<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -18,25 +18,33 @@
 
     <title>Работа мечты</title>
 </head>
+
+</head>
 <body>
 <div class="container pt-3">
 
     <div class="row">
         <div class="card" style="width: 100%">
             <div class="card-header">
-                Авторизация
+                Регистрация пользователя
             </div>
             <div class="card-body">
-                <form action="<%=request.getContextPath()%>/auth.do" method="post">
+                <form action="<%=request.getContextPath()%>/reg.do" method="post">
+                    <div class="form-group">
+                        <label>Логин</label>
+                        <input type="text" class="form-control" name="name" required aria-required="true">
+                    </div>
+
                     <div class="form-group">
                         <label>Почта</label>
                         <input type="text" class="form-control" name="email" required aria-required="true">
                     </div>
+
                     <div class="form-group">
                         <label>Пароль</label>
                         <input type="text" class="form-control" name="password" required aria-required="true">
                     </div>
-                    <button type="submit" class="btn btn-primary">Войти</button>
+                    <button type="submit" class="btn btn-primary">Зарегистрироватся</button>
                     <c:if test="${not empty error}">
                         <div style="color:red; font-weight: bold; margin: 30px 0;">
                                 ${error}
@@ -46,22 +54,6 @@
             </div>
         </div>
     </div>
-
-
-    <div class="row">
-        <div class="card" style="width: 100%">
-            <div class="card-header">
-                Регистрация пользователя
-            </div>
-            <div class="card-body">
-                <li class="nav-item">
-                    <a class="nav-link" href="<%=request.getContextPath()%>/reg.do">Регистрация</a>
-                </li>
-            </div>
-        </div>
-    </div>
-
-
 </div>
 </body>
 </html>

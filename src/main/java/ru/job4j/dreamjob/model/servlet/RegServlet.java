@@ -22,10 +22,10 @@ public class RegServlet extends HttpServlet {
         String name = req.getParameter("name");
         String email = req.getParameter("email");
         String password = req.getParameter("password");
-        if (DbStore.instOf().findByEmailUser(email) == null) {
-            HttpSession sc = req.getSession();
-            User user = new User(name, email, password);
+        if (DbStore.instOf().findByEmail(email) == null) {
+            User user = new User(0, name, email, password);
             DbStore.instOf().saveUser(user);
+            HttpSession sc = req.getSession();
             sc.setAttribute("user", user);
             resp.sendRedirect(req.getContextPath() + "/posts.do");
 

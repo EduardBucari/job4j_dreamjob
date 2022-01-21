@@ -23,12 +23,10 @@
 
   <title>Работа мечты</title>
 
-  <jsp:include page="/menu.jsp" />
-
 </head>
 <body>
+<jsp:include page="/menu.jsp" />
 <div class="container pt-3">
-
   <div class="row">
     <div class="card" style="width: 100%">
       <div class="card-header">

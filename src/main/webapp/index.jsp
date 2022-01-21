@@ -1,6 +1,4 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page import="ru.job4j.dreamjob.model.store.MemStore" %>
-<%@ page import="ru.job4j.dreamjob.model.Post" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -21,6 +19,7 @@
     <title>Работа мечты</title>
 </head>
 <body>
+<jsp:include page="/menu.jsp" />
 <div class="container">
     <div class="row">
         <ul class="nav">

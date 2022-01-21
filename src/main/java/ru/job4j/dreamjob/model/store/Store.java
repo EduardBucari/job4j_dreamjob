@@ -1,28 +1,45 @@
 package ru.job4j.dreamjob.model.store;
 
 import ru.job4j.dreamjob.model.Candidate;
+import ru.job4j.dreamjob.model.City;
 import ru.job4j.dreamjob.model.Post;
 import ru.job4j.dreamjob.model.User;
 
 import java.util.Collection;
 
 public interface Store {
-
     Collection<Post> findAllPosts();
 
     Collection<Candidate> findAllCandidates();
 
-    void save(Post post);
+    Collection<City> findAllCity();
 
-    void saveCnd(Candidate post);
+    void savePost(Post post);
 
-    Post findById(int id);
+    void saveCandidate(Candidate candidate);
 
-    Candidate findByIdCnd(int id);
+    void deletePost(int id);
 
-    Candidate deleteCnd(int id);
+    void deleteCandidate(int id);
+
+    Post findByIdPost(int id);
+
+    Candidate findByCandidate(int id);
+
+    Post findByNamePost(String name);
+
+    Candidate findByNameCandidate(String name);
+
+    User findByEmail(String email);
+
+    Collection<User> findAllUsers();
+
+    City findByIdCity(int id);
 
     void saveUser(User user);
 
-    User findByEmailUser(String email);
+    void deleteUser(int id);
+
+
+
 }

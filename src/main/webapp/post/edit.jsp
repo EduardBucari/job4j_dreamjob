@@ -21,15 +21,14 @@
 
   <title>Работа мечты</title>
 
-  <jsp:include page="/menu.jsp" />
-
 </head>
 <body>
+<jsp:include page="/menu.jsp" />
 <%
   String id = request.getParameter("id");
   Post post = new Post(0, "");
   if (id != null) {
-    post = DbStore.instOf().findById(Integer.parseInt(id));
+    post = DbStore.instOf().findByIdPost(Integer.parseInt(id));
   }
 %>
 <div class="container pt-3">

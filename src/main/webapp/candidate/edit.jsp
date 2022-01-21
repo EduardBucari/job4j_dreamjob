@@ -1,7 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page import="ru.job4j.dreamjob.model.store.MemStore" %>
+<%@ page import="ru.job4j.dreamjob.model.Post" %>
 <%@ page import="ru.job4j.dreamjob.model.Candidate" %>
 <%@ page import="ru.job4j.dreamjob.model.store.DbStore" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -21,10 +22,9 @@
 
     <title>Работа мечты</title>
 
-    <jsp:include page="/menu.jsp" />
-
 </head>
 <body>
+<jsp:include page="/menu.jsp" />
 <%
     String id = request.getParameter("id");
     Candidate candidate = new Candidate(0, "");

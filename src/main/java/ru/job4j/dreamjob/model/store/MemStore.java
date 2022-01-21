@@ -49,6 +49,10 @@ public class MemStore {
         posts.put(post.getId(), post);
     }
 
+    public Post findById(int id) {
+        return posts.get(id);
+    }
+
     public void save(Candidate candidate) {
         if (candidate.getId() == 0) {
             candidate.setId(CANDIDATE_ID.incrementAndGet());
@@ -56,11 +60,11 @@ public class MemStore {
         candidates.put(candidate.getId(), candidate);
     }
 
-   public Post findById(int id) {
-        return posts.get(id);
+   public Candidate findByCandidateId(int id) {
+        return candidates.get(id);
    }
 
-   public Candidate findByIdCandidate(int id) {
-        return candidates.get(id);
+   public void delete(int id) {
+        candidates.remove(id);
    }
 }

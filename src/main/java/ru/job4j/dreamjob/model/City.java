@@ -1,7 +1,5 @@
 package ru.job4j.dreamjob.model;
 
-import ru.job4j.dreamjob.model.store.DbStore;
-
 public class City {
     private int id;
     private String nameCity;

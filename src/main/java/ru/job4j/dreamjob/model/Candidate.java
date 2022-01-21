@@ -1,13 +1,34 @@
 package ru.job4j.dreamjob.model;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
-/**
- * Модель данных - кандидат
- */
 public class Candidate {
     private int id;
     private String name;
+    private LocalDateTime created = LocalDateTime.now();
+    private int cityId;
+
+    public Candidate(int id, String name, LocalDateTime created, int cityId) {
+        this.id = id;
+        this.name = name;
+        this.created = created;
+        this.cityId = cityId;
+    }
+
+    public LocalDateTime getCreated() {
+        return created;
+    }
+
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
+    }
+
+    public Candidate(int id, String name, int cityId) {
+        this.id = id;
+        this.name = name;
+        this.cityId = cityId;
+    }
 
     public Candidate(int id, String name) {
         this.id = id;
@@ -45,5 +66,13 @@ public class Candidate {
     @Override
     public int hashCode() {
         return Objects.hash(id, name);
+    }
+
+    public int getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(int cityId) {
+        this.cityId = cityId;
     }
 }

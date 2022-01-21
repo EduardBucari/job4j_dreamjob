@@ -1,6 +1,7 @@
 package ru.job4j.dreamjob.model;
 
 public class Email {
+
     private String name;
 
     public String getName() {

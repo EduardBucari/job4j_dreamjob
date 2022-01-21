@@ -13,11 +13,6 @@ import java.io.IOException;
 public class RegServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("req.jsp").forward(req, resp);
-    }
-
-    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("name");
         String email = req.getParameter("email");
@@ -28,9 +23,8 @@ public class RegServlet extends HttpServlet {
             HttpSession sc = req.getSession();
             sc.setAttribute("user", user);
             resp.sendRedirect(req.getContextPath() + "/posts.do");
-
         } else {
-            req.setAttribute("error", "Пользователь с таким email уже существует. Попробуйде снова");
+            req.setAttribute("error", "Пользавател уже существует");
             req.getRequestDispatcher("reg.jsp").forward(req, resp);
         }
     }

@@ -2,7 +2,6 @@ package ru.job4j.dreamjob.model.servlet;
 
 import ru.job4j.dreamjob.model.User;
 import ru.job4j.dreamjob.model.store.DbStore;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

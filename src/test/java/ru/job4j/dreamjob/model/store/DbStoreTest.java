@@ -8,7 +8,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 
-
+/**
+ * Тесты на DbStore
+ */
 public class DbStoreTest  {
 
     @Test
@@ -29,7 +31,6 @@ public class DbStoreTest  {
         assertThat(candidateInDb.getName(), is(candidate.getName()));
     }
 
-
     @Test
     public void deletePost() {
         Store store = DbStore.instOf();
@@ -39,7 +40,6 @@ public class DbStoreTest  {
         assertThat(store.findByIdPost(1), is(nullValue()));
     }
 
-
     @Test
     public void deleteCandidate() {
         Store store = DbStore.instOf();
@@ -48,7 +48,6 @@ public class DbStoreTest  {
         store.deleteCandidate(1);
         assertThat(store.findByCandidate(1), is(nullValue()));
     }
-
 
     @Test
     public void updatePost() {

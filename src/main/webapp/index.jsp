@@ -1,4 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page import="ru.job4j.dreamjob.model.store.DbStore" %>
+<%@ page import="ru.job4j.dreamjob.model.Post" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -19,7 +23,6 @@
     <title>Работа мечты</title>
 </head>
 <body>
-<jsp:include page="/menu.jsp" />
 <div class="container">
     <div class="row">
         <ul class="nav">
@@ -35,9 +38,14 @@
             <li class="nav-item">
                 <a class="nav-link" href="<%=request.getContextPath()%>/candidate/edit.jsp">Добавить кандидата</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp">Войти</a>
+            <li class="nav-link">
+                <c:out value="${user.name}"/>
             </li>
+            <c:if test="${user != null}">
+                <li class="nav-item">
+                    <a class="nav-link" href="<%=request.getContextPath()%>/logout.do"> | Выйти </a>
+                </li>
+            </c:if>
         </ul>
     </div>
     <div class="row">

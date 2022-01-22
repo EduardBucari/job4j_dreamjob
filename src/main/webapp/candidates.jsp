@@ -1,17 +1,19 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page import="ru.job4j.dreamjob.model.store.MemStore" %>
+<%@ page import="ru.job4j.dreamjob.model.store.DbStore" %>
 <%@ page import="ru.job4j.dreamjob.model.Candidate" %>
 <%@ page import="java.util.Collection" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
+<%@ page import="ru.job4j.dreamjob.model.City" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html lang="en">
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <title>Работа мечты</title>
-  <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
@@ -22,11 +24,22 @@
           integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
   <title>Работа мечты</title>
-
 </head>
 <body>
-<jsp:include page="/menu.jsp" />
 <div class="container pt-3">
+  <div class="row">
+    <ul class="nav">
+      <li class="nav-link">
+        <c:out value="${user.name}"/>
+      </li>
+      <c:if test="${user != null}">
+        <li class="nav-item">
+          <a class="nav-link" href="<%=request.getContextPath()%>/logout.do"> | Выйти </a>
+        </li>
+      </c:if>
+    </ul>
+  </div>
+
   <div class="row">
     <div class="card" style="width: 100%">
       <div class="card-header">
@@ -36,27 +49,48 @@
         <table class="table">
           <thead>
           <tr>
-            <th scope="col">Имя</th>
-            <th scope="col">Фото</th>
+            <th scope="col">Названия</th>
+            <th>Город</th>
+            <th>View</th>
+            <th>Удалить</th>
+            <th>Добавить фото</th>
           </tr>
           </thead>
           <tbody>
-          <c:forEach items="${candidates}" var="candidate">
+          <c:forEach items="${candidates}" var="candidate" >
             <tr>
               <td>
                 <a href='<c:url value="/candidate/edit.jsp?id=${candidate.id}"/>'>
                   <i class="fa fa-edit mr-3"></i>
                 </a>
-                <c:out value="${candidate.name}"/>
+                <div>
+                  <c:out value="${candidate.name}"/>
+                </div>
               </td>
               <td>
-                <img src="<c:url value='/download?name=${candidate.id}.jpeg'/>" width="100px" height="100px"/>
-                <a href='<c:url value="/upload.jsp?id=${candidate.id}"/>'>
-                  <img src="https://img.icons8.com/ios/50/000000/add--v2.png" width="25px" height="25px"/>
-                </a>
-                <a href='<c:url value="/del.jsp?id=${candidate.id}"/>'>
-                  <img src="https://img.icons8.com/material-rounded/24/000000/filled-trash.png"/>
-                </a>
+                <div>
+                  <c:set var="cityid" value="${candidate.cityId}" scope="request"/>
+                  <%
+                    int id = (int) request.getAttribute("cityid");
+                    City city = DbStore.instOf().findByIdCity(id);
+                  %>
+                  <%=city.getNameCity()%>
+                </div>
+              </td>
+              <td>
+                <img src="<c:url value='/download?id=${candidate.id}'/>" width="100px" height="100px"/>
+              </td>
+              <td>
+                <form method="post" action="<c:url value='/delete'/>">
+                  <input type="number" hidden name="id" value="${candidate.id}" />
+                  <input type="submit" name="delete" value="Удалить"/>
+                </form>
+              </td>
+              <td>
+                <form method="get" action="<c:url value='/upload'/>">
+                  <input type="number" hidden name="id" value="${candidate.id}" />
+                  <input type="submit" value="Добавить"/>
+                </form>
               </td>
             </tr>
           </c:forEach>
@@ -64,6 +98,11 @@
         </table>
       </div>
     </div>
+  </div>
+  <div>
+    <li class="nav">
+      <a class="nav-link" href="<%=request.getContextPath()%>/posts.do">Назад</a>
+    </li>
   </div>
 </div>
 </body>

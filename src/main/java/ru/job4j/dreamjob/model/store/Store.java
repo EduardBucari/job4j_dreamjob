@@ -39,7 +39,4 @@ public interface Store {
     void saveUser(User user);
 
     void deleteUser(int id);
-
-
-
 }

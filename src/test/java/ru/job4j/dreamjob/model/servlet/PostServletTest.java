@@ -1,6 +1,5 @@
 package ru.job4j.dreamjob.model.servlet;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import ru.job4j.dreamjob.model.Post;
 import ru.job4j.dreamjob.model.store.DbStore;
@@ -17,6 +16,9 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+/**
+ * PostServlet Test
+ */
 public class PostServletTest  {
 
     @Test

@@ -1,9 +1,7 @@
 package ru.job4j.dreamjob.model.servlet;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import ru.job4j.dreamjob.model.Candidate;
-import ru.job4j.dreamjob.model.Post;
 import ru.job4j.dreamjob.model.store.DbStore;
 
 import javax.servlet.ServletException;
@@ -17,6 +15,9 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+/**
+ * CandidateServlet Test
+ */
 public class CandidateServletTest {
     @Test
     public void whenCreatePost() throws IOException, ServletException {

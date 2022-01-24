@@ -1,7 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page import="ru.job4j.dreamjob.model.store.DbStore" %>
-<%@ page import="ru.job4j.dreamjob.model.Candidate" %>
-<%@ page import="java.util.Collection" %>
 <%@ page import="ru.job4j.dreamjob.model.City" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
@@ -99,6 +97,7 @@
       </div>
     </div>
   </div>
+
   <div>
     <li class="nav">
       <a class="nav-link" href="<%=request.getContextPath()%>/posts.do">Назад</a>

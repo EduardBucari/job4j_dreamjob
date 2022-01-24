@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Candidate {
+
     private int id;
     private String name;
     private LocalDateTime created = LocalDateTime.now();

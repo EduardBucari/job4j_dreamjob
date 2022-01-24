@@ -2,7 +2,6 @@ package ru.job4j.dreamjob.model.servlet;
 
 import ru.job4j.dreamjob.model.Config;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,6 +24,7 @@ public class DownloadServlet extends HttpServlet {
                 break;
             }
         }
+
         resp.setContentType("application/octet-stream");
         resp.setHeader("Content-Disposition", "attachment; filename=\"" + downloadFile  + "\"");
         try (FileInputStream stream = new FileInputStream(downloadFile)) {

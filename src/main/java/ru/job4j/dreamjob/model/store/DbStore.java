@@ -338,6 +338,7 @@ public class DbStore implements Store {
         return userList;
     }
 
+
     @Override
     public City findByIdCity(int id) {
         try (Connection cn = pool.getConnection();

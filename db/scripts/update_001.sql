@@ -23,9 +23,8 @@ create table if not exists users (
      email text
 );
 
-
-insert into city(nameCity) values ('N.Y.');
-insert into city(nameCity) values ('L.A.');
+insert into city(nameCity) values ('Москва');
+insert into city(nameCity) values ('Санкт-Петербург');
 select * from candidate;
 select *  from post;
 select *  from users;

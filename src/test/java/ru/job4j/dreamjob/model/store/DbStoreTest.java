@@ -1,6 +1,7 @@
 package ru.job4j.dreamjob.model.store;
 
 import org.junit.Test;
+
 import ru.job4j.dreamjob.model.Candidate;
 import ru.job4j.dreamjob.model.Post;
 
@@ -32,7 +33,7 @@ public class DbStoreTest  {
     }
 
     @Test
-    public void deletePost() {
+    public void whenDeletePost() {
         Store store = DbStore.instOf();
         Post post = new Post(1, "Alex");
         store.savePost(post);
@@ -41,7 +42,7 @@ public class DbStoreTest  {
     }
 
     @Test
-    public void deleteCandidate() {
+    public void whenDeleteCandidate() {
         Store store = DbStore.instOf();
         Candidate candidate = new Candidate(1, "Java", 2);
         store.saveCandidate(candidate);
@@ -50,7 +51,7 @@ public class DbStoreTest  {
     }
 
     @Test
-    public void updatePost() {
+    public void whenUpdatePost() {
         Store store = DbStore.instOf();
         Post post = new Post(0, "Java ");
         store.savePost(post);
@@ -62,7 +63,7 @@ public class DbStoreTest  {
     }
 
     @Test
-    public void updateCandidate() {
+    public void whenUpdateCandidate() {
         Store store = DbStore.instOf();
         Candidate candidate = new Candidate(0, "Alex1", 2);
         store.saveCandidate(candidate);

@@ -32,5 +32,4 @@ public class PostServletTest  {
         assertThat(post, notNullValue());
         assertThat(post.getName(), is("name of new post"));
     }
-
 }

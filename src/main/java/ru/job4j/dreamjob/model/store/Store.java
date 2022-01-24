@@ -8,6 +8,7 @@ import ru.job4j.dreamjob.model.User;
 import java.util.Collection;
 
 public interface Store {
+
     Collection<Post> findAllPosts();
 
     Collection<Candidate> findAllCandidates();
@@ -33,7 +34,6 @@ public interface Store {
     User findByEmail(String email);
 
     Collection<User> findAllUsers();
-
     City findByIdCity(int id);
 
     void saveUser(User user);

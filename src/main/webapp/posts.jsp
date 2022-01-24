@@ -1,7 +1,4 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page import="ru.job4j.dreamjob.model.store.DbStore" %>
-<%@ page import="ru.job4j.dreamjob.model.Post" %>
-<%@ page import="java.util.Collection" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html lang="en">
@@ -79,6 +76,7 @@
             </div>
         </div>
     </div>
+
     <div>
         <li class="nav">
             <a class="nav-link" href="<%=request.getContextPath()%>/index.do">Назад</a>

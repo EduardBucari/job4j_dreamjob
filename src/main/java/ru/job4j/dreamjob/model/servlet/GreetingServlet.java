@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class GreetingServlet extends HttpServlet {
+
     private final List<Email> emails = new CopyOnWriteArrayList<>();
 
     private static final Gson GSON = new GsonBuilder().create();

@@ -109,6 +109,7 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- Подключим библиотеку GSON. -->
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
